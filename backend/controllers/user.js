@@ -9,9 +9,9 @@ const User = require('../models/User');
 // Créer compte utilisateur
 
 exports.signup = (req, res, next) => {
-  //const regexPasswordHard = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const regexPasswordHard = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-  //if (regexPasswordHard.test(req.body.password)){
+  if (regexPasswordHard.test(req.body.password)){
       
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
@@ -24,11 +24,11 @@ exports.signup = (req, res, next) => {
               .catch( error => res.status(400).json({ error }));
       })
       .catch(error => res.status(500).json({ error }));
-  };
-  //else {
-//       res.status(400).json({ message : 'Mot de passe invalide, veuillez mettre au minimum 8 caractères, dont 1 majuscule et un nombre'})
-//   }
-// };
+  }
+  else {
+      res.status(400).json({ message : 'Mot de passe invalide, veuillez mettre au minimum 8 caractères, dont 1 majuscule et un nombre'})
+  }
+};
 
 // Connexion à un compte utilisateur
 exports.login = (req, res, next) => {

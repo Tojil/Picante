@@ -1,7 +1,6 @@
 const express = require ('express');
 const mongoose = require('mongoose'); // Facilite les interactions avec la db
 const path = require('path');
-const bodyParser = require('body-parser');
 const helmet = require("helmet");
 const xss = require('xss-clean');
 
@@ -16,8 +15,9 @@ const dotenv = require('dotenv').config()  // Charge la variable d'environnement
 
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
+const { http } = require('npmlog');
 
-mongoose.connect('mongodb+srv://picante:picante@cluster0.n16ez.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', 
+ mongoose.connect('mongodb+srv://picante:picante@cluster0.n16ez.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 {
   useNewUrlParser: true,
   useUnifiedTopology: true })
@@ -35,19 +35,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    //res.setHeader('HTTP.StatusOK')
     next();
   });
 
 
 app.use(express.json());
-app.use(bodyParser.json());
-
 
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes); 
-app.use('/api/sauces', sauceRoutes); // Enregistrement du routeur pour toutes les demandes effectuées vers /api/sauces
+app.use('/api/sauce', sauceRoutes); // Enregistrement du routeur pour toutes les demandes effectuées vers /api/sauces
 
 
 
