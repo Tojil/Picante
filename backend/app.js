@@ -3,6 +3,7 @@ const mongoose = require('mongoose'); // Facilite les interactions avec la db
 const path = require('path');
 const helmet = require("helmet");
 const xss = require('xss-clean');
+const cors = require('cors');
 
 const clean = require('xss-clean/lib/xss').clean
  
@@ -16,6 +17,7 @@ const dotenv = require('dotenv').config()  // Charge la variable d'environnement
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 const { http } = require('npmlog');
+const app = express(); // Création d'une application express
 
  mongoose.connect('mongodb+srv://picante:picante@cluster0.n16ez.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 {
@@ -24,7 +26,7 @@ const { http } = require('npmlog');
   .then(() => console.log('Conexion à MongoDB réussi !'))
   .catch(() => console.log('connexion à MongoDB échouée !'))
 
-const app = express(); // Création d'une application express
+
 
 
 app.use(helmet());
