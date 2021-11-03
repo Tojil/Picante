@@ -1,25 +1,46 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
+const cors = require('cors');
 
 // Create Sauce
 exports.createSauce = (req, res, next) => {
-    const sauceObject = JSON.parse(req.body.sauce);
-    console.log(req.file.filename);
-    delete sauceObject._id;
-    // Creation d'une nouvelle instance du modèle Sauce
-    const sauce = new Sauce({
-      ...sauceObject,
-      // Génère url de l'image
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      likes: 0,
-      dislikes: 0,
-      usersLiked: '',
-      usersDisliked: ''
-    });
-    sauce.save()// Enregistre dans la db l'objet et renvoie une promesse
-      .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
-      .catch(error => res.status(400).json({ error }));
+  const sauceObject = JSON.parse(req.body.sauce);
+  console.log(req.file.filename);
+  delete sauceObject._id;
+  // Creation d'une nouvelle instance du modèle Sauce
+  const sauce = new Sauce({
+    ...sauceObject,
+    // Génère url de l'image
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    likes: 0,
+    dislikes: 0,
+    usersLiked: '',
+    usersDisliked: ''
+  });
+  sauce.save()// Enregistre dans la db l'objet et renvoie une promesse
+    .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
+    .catch(error => res.status(400).json({ error }));
 };
+
+// // Create Sauce
+// exports.createSauce = (req, res, next) => {
+//     const sauceObject = JSON.parse(req.body.sauce);
+//     console.log(req.file.filename);
+//     delete sauceObject._id;
+//     // Creation d'une nouvelle instance du modèle Sauce
+//     const sauce = new Sauce({
+//       ...sauceObject,
+//       // Génère url de l'image
+//       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+//       likes: 0,
+//       dislikes: 0,
+//       usersLiked: '',
+//       usersDisliked: ''
+//     });
+//     sauce.save()// Enregistre dans la db l'objet et renvoie une promesse
+//       .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
+//       .catch(error => res.status(400).json({ error }));
+// };
 
 // Modify Sauce
 exports.modifySauce = (req, res, next) => {
