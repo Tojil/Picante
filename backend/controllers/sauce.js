@@ -1,9 +1,9 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
-const cors = require('cors');
 
 // Create Sauce
 exports.createSauce = (req, res, next) => {
+  console.log('test');
   const sauceObject = JSON.parse(req.body.sauce);
   console.log(req.file.filename);
   delete sauceObject._id;
@@ -56,6 +56,7 @@ exports.modifySauce = (req, res, next) => {
 
 // Delete Sauce
 exports.deleteSauce = (req, res, next) => {
+  console.log('test')
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
       const filename = sauce.imageUrl.split('/images/')[1];
