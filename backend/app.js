@@ -1,6 +1,6 @@
-const express = require ('express');
+const express = require ('express'); // Ici, nous importons le package express pour creer des applications express
 const mongoose = require('mongoose'); // Facilite les interactions avec la db
-const helmet = require("helmet");
+const helmet = require("helmet"); // // Ici, nous importons le package helmet Helmet nous aide à sécuriser nos applications Express.js en définissant divers en-têtes HTTP
 const xss = require('xss-clean');
 const cors = require('cors');
 const { join } = require('path');
@@ -10,7 +10,6 @@ require('dotenv').config()
 const clean = require('xss-clean/lib/xss').clean
  
 const cleaned = clean('<script></script>')
-// will return "&lt;script>&lt;/script>"
 
 
 const dotenv = require('dotenv').config()  // Charge la variable d'environnement
@@ -19,7 +18,7 @@ const dotenv = require('dotenv').config()  // Charge la variable d'environnement
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
-
+// Connection à Mongoose
  mongoose.connect(process.env.SERVER_URL,
 {
   useNewUrlParser: true,

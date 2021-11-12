@@ -10,22 +10,22 @@ const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
   const regexPasswordHard = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
+    // Regex verifie que le mot de passe remplise les conditions
   if (regexPasswordHard.test(req.body.password)){
-      
+      // bcrypt il va recuperer le mot de passe et il va le hacher autant de fois demandé 10
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
           const user = new User({
               email: req.body.email,
               password: hash
           });
-          user.save()
+          user.save() // il l'enregistre dans a base de données et renvooie la reponse
               .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
               .catch( error => res.status(400).json({ error }));
       })
       .catch(error => res.status(500).json({ error }));
   }
-  else {
+  else {  // s'il ne rempli pas mes conditions du regex alors
       res.status(400).json({ message : 'Mot de passe invalide, veuillez mettre au minimum 8 caractères, dont 1 majuscule et un nombre'})
   }
 };
